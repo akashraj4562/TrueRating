@@ -14,8 +14,10 @@
 export function parseRatingCount(raw: string | null | undefined): number | null {
   if (raw == null) return null;
 
-  // Normalise: trim whitespace, lowercase, remove all spaces
-  const s = raw.trim().toLowerCase().replace(/\s/g, '');
+  // Normalise: trim whitespace, lowercase, remove all spaces and parentheses.
+  // why: carousel cards surface count as "(27.6K)" with parens — strip them
+  // defensively here so every caller is safe regardless of where the string came from.
+  const s = raw.trim().toLowerCase().replace(/\s/g, '').replace(/[()]/g, '');
   if (!s) return null;
 
   // Remove commas — handles both Western ("1,234") and Indian ("1,23,456") formats

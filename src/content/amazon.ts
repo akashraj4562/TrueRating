@@ -86,7 +86,25 @@ function extractRating(card: Element): ParsedRating | null {
   // ── Rating count ───────────────────────────────────────────────────────────
   // Prefer the aria-label attribute ("27,612 ratings" — full number) over
   // textContent ("(27.6K)" — abbreviated and parenthesised).
-  const countEl = card.querySelector(AMAZON.RATING_COUNT_SELECTOR);
+  //
+  // Fallback for carousel cards: they often lack [aria-label*="ratings"] on the
+  // count element. Instead the count is the next sibling after the rating <a> —
+  // recognised by matching "(27.6K)" / "(271)" / "27,612" patterns.
+  let countEl = card.querySelector(AMAZON.RATING_COUNT_SELECTOR);
+
+  if (!countEl && ratingWidget) {
+    let sibling = ratingWidget.nextElementSibling;
+    while (sibling) {
+      const text = sibling.textContent?.trim() ?? '';
+      // Matches "(27.6K)", "(271)", "27,612", "5.3K" — the count element.
+      if (/^\([\d,.KkMm]+\)$/.test(text) || /^[\d,.KkMm]+$/.test(text)) {
+        countEl = sibling;
+        break;
+      }
+      sibling = sibling.nextElementSibling;
+    }
+  }
+
   if (!countEl) return null;
 
   // Strip " ratings" suffix from aria-label → "27,612" → parseRatingCount → 27612
