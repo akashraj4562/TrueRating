@@ -81,8 +81,24 @@ export const AMAZON = {
   /** Strip " ratings" / " rating" suffix from the aria-label value */
   RATING_COUNT_ARIA_STRIP: /\s*ratings?\s*$/i,
 
-  /** Parses "4.2 out of 5 stars, rating details" — group 1 is the number */
-  RATING_REGEX: /^(\d+(?:[.,]\d+)?)\s+out of/i,
+  /**
+   * Parses the star rating number from an aria-label.
+   *
+   * Two formats observed on Amazon.in:
+   *   Standard grid/searchgrid: "4.2 out of 5 stars, rating details"
+   *   SBTC sponsored carousel:  "Rated 4.3 out of 5 stars by 35 reviews."
+   *
+   * Removed the `^` anchor so both formats match.
+   * Optional `(?:rated\s+)?` absorbs the "Rated " prefix when present.
+   */
+  RATING_REGEX: /(?:rated\s+)?(\d+(?:[.,]\d+)?)\s+out of/i,
+
+  /**
+   * Extracts count from the SBTC carousel aria-label when no separate
+   * count element exists.
+   * Matches "by 35 reviews" or "by 1,234 reviews" in the same string.
+   */
+  SBTC_COUNT_FROM_ARIA: /\bby\s+([\d,.kKmM]+)\s+reviews?/i,
 
 } as const;
 

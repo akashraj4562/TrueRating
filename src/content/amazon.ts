@@ -105,7 +105,21 @@ function extractRating(card: Element): ParsedRating | null {
     }
   }
 
-  if (!countEl) return null;
+  // Fallback C: SBTC sponsored carousel — no separate count element exists.
+  // The count is embedded in the rating aria-label as "by 35 reviews":
+  //   "Rated 4.3 out of 5 stars by 35 reviews. Go to review section."
+  // Extract it directly from ratingText using SBTC_COUNT_FROM_ARIA.
+  // Use ratingWidget as the anchor so the badge renders next to the stars.
+  if (!countEl) {
+    const countMatch = ratingText.match(AMAZON.SBTC_COUNT_FROM_ARIA);
+    if (countMatch?.[1] && ratingWidget) {
+      const parsedFromAria = parseRatingCount(countMatch[1]);
+      if (parsedFromAria === null) return null;
+      if (parsedFromAria < MIN_RATINGS_FOR_BADGE) return null;
+      return { rating, rawCount: countMatch[1], countAnchor: ratingWidget };
+    }
+    return null;
+  }
 
   // Strip " ratings" suffix from aria-label → "27,612" → parseRatingCount → 27612
   const ariaLabel = countEl.getAttribute('aria-label') ?? '';
