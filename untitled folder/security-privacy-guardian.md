@@ -23,18 +23,6 @@ Guarantee that nothing ships which violates the §3 non-negotiables in `CLAUDE.m
 ## How you report
 Output a verdict: **PASS** or **BLOCKED**. For each finding: severity (block / must-fix / advisory), the exact file:line, why it matters, and the minimal fix. No vague worries — concrete evidence or it isn't a finding.
 
-## Test-coverage gate — the audit now requires test evidence
-
-Code inspection proves intent; tests prove behaviour. Your audit now includes these checks, and a failure on any is a finding at minimum **must-fix**, escalating to **block** when the egress or permission scope is non-trivial:
-
-1. **Network-egress tests must exist.** Grep the test files for `fetch`, `XMLHttpRequest`, `WebSocket`, `sendBeacon`. If none of these appear in any test (positive or negative — asserting they are *not* called counts), the §3.1 "zero egress" non-negotiable is a claim without a proof. Flag it as a must-fix until a test asserts the absence.
-2. **`chrome.storage` writes are tested for shape.** At least one test must confirm only settings keys are written — never PII, never page content, never identifiers. Inspect `src/content/__tests__/settings-integration.test.ts` and any mock setup; if the assertion is missing, flag must-fix.
-3. **Every new manifest permission is exercised by a test.** When a permission is added to `manifest.json`, the audit requires a test that uses the permission-scoped feature and proves it works without broader permissions. No test → no permission. This makes "minimum permissions" provable rather than aspirational.
-
-See `docs/TEST_PLAN.md` Sections A, B5, and D for the per-file regression triggers that intersect with these checks.
-
-**A security posture without tests is a claim, not a proof. The audit verdict requires test evidence, not just code inspection.** A clean grep of the source is necessary but not sufficient; the test suite must actively *defend* the property going forward.
-
 ## Judgment
 - Distinguish a real risk from theatre. Don't block on cosmetic issues; do block on anything touching egress, permissions, remote code, or platform automation.
 - "It would be convenient to just add one tracking ping" is exactly the request you exist to refuse.

@@ -1,0 +1,71 @@
+<!--
+  Fixture: Amazon.in sponsored search result card
+  Source: Live Amazon.in search page, verified 2026-05-25
+  Query: "headphones"
+  Product: Noise Airwave Max 6 (example)
+
+  Key signals present:
+    - Sponsored label:  .puis-sponsored-label-text
+    - Rating:           <a aria-label="2.4 out of 5 stars, rating details">
+    - Count:            <a aria-label="8 ratings">  (below MIN_RATINGS_FOR_BADGE=50)
+    - Inner card:       .puis-card-container  (target for cc-dim)
+-->
+<div data-component-type="s-search-result"
+     data-asin="B0CKBVYC3W"
+     data-index="0">
+  <div class="puis-card-container s-card-container s-overflow-hidden aok-relative">
+
+    <!-- Sponsored label — primary signal for de-sponsoring -->
+    <a href="javascript:void(0)"
+       role="button"
+       class="puis-label-popover puis-sponsored-label-text">
+      Sponsored
+    </a>
+
+    <div class="puisg-row">
+      <div class="puisg-col puisg-col-4-of-12">
+        <!-- Product image (omitted) -->
+        <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
+             alt="Noise Airwave Max 6 headphones" class="s-image" />
+      </div>
+
+      <div class="puisg-col puisg-col-8-of-12">
+        <!-- Title -->
+        <h2 aria-label="Sponsored Ad - Noise Airwave Max 6 Wireless Bluetooth Headphones"
+            class="a-size-medium a-spacing-none a-color-base a-text-normal">
+          <a href="/dp/B0CKBVYC3W" class="a-link-normal s-line-clamp-4">
+            Noise Airwave Max 6 Wireless Bluetooth Headphones
+          </a>
+        </h2>
+
+        <!-- Rating row — low count (8), below badge threshold -->
+        <div class="a-row a-size-small">
+          <a aria-label="2.4 out of 5 stars, rating details"
+             href="javascript:void(0)"
+             role="button"
+             class="a-popover-trigger a-declarative mvt-review-star-mini-popover">
+            <i data-cy="reviews-ratings-slot"
+               aria-hidden="true"
+               class="a-icon a-icon-star-mini a-star-mini-2 mvt-review-star-mini">
+              <span class="a-icon-alt">2.4 out of 5 stars</span>
+            </i>
+            <i class="a-icon a-icon-popover"></i>
+          </a>
+          <a aria-label="8 ratings"
+             class="a-link-normal s-underline-text s-underline-link-text s-link-style">
+            <span class="a-size-small a-color-base">(8)</span>
+          </a>
+        </div>
+
+        <!-- Price -->
+        <div class="a-row">
+          <span class="a-price">
+            <span class="a-offscreen">₹6,499</span>
+            <span class="a-price-whole">6,499</span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

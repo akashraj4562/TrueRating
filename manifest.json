@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "TrueRating",
+  "version": "0.1.0",
+  "description": "TrueRating: confidence-weighted ratings and sponsored result filtering for Amazon.in",
+
+  "permissions": [
+    "storage"
+  ],
+
+  "host_permissions": [
+    "*://*.amazon.in/*"
+  ],
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.amazon.in/*"],
+      "js": ["content-amazon.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "TrueRating"
+  },
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+
+  "_comment_icons": "Icons not included in v0.1 POC — add before Chrome Web Store submission"
+}

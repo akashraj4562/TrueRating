@@ -1,0 +1,62 @@
+<!--
+  Fixture: Amazon.in organic (non-sponsored) search result card
+  Source: Live Amazon.in search page, verified 2026-05-25
+  Query: "headphones"
+  Product: Sony WH-1000XM5 (example)
+
+  Key signals present:
+    - No sponsored label
+    - Rating:  <a aria-label="4.2 out of 5 stars, rating details">
+    - Count:   <a aria-label="27,612 ratings">  (above MIN_RATINGS_FOR_BADGE=50 → badge shown)
+    - Inner card: .puis-card-container
+-->
+<div data-component-type="s-search-result"
+     data-asin="B09XS7JWHH"
+     data-index="3">
+  <div class="puis-card-container s-card-container s-overflow-hidden aok-relative">
+
+    <div class="puisg-row">
+      <div class="puisg-col puisg-col-4-of-12">
+        <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
+             alt="Sony WH-1000XM5 headphones" class="s-image" />
+      </div>
+
+      <div class="puisg-col puisg-col-8-of-12">
+        <!-- Title -->
+        <h2 class="a-size-medium a-spacing-none a-color-base a-text-normal">
+          <a href="/dp/B09XS7JWHH" class="a-link-normal s-line-clamp-4">
+            Sony WH-1000XM5 Wireless Noise Cancelling Headphones
+          </a>
+        </h2>
+
+        <!-- Rating row — high count → badge should appear -->
+        <div class="a-row a-size-small">
+          <a aria-label="4.2 out of 5 stars, rating details"
+             href="javascript:void(0)"
+             role="button"
+             class="a-popover-trigger a-declarative mvt-review-star-mini-popover">
+            <i data-cy="reviews-ratings-slot"
+               aria-hidden="true"
+               class="a-icon a-icon-star-mini a-star-mini-4 mvt-review-star-mini">
+              <span class="a-icon-alt">4.2 out of 5 stars</span>
+            </i>
+            <i class="a-icon a-icon-popover"></i>
+          </a>
+          <a aria-label="27,612 ratings"
+             class="a-link-normal s-underline-text s-underline-link-text s-link-style">
+            <span class="a-size-small a-color-base">(27.6K)</span>
+          </a>
+        </div>
+
+        <!-- Price -->
+        <div class="a-row">
+          <span class="a-price">
+            <span class="a-offscreen">₹26,990</span>
+            <span class="a-price-whole">26,990</span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

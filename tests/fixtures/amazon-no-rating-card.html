@@ -1,0 +1,53 @@
+<!--
+  Fixture: Amazon.in new/unrated product card
+  Source: Live Amazon.in search page, verified 2026-05-25
+  Query: "headphones"
+
+  Key signals:
+    - No sponsored label       → not dimmed
+    - No rating widget         → no badge
+    - No rating count          → no badge
+    - "New Arrival" label present
+    - Inner card: .puis-card-container
+
+  Expected ClearCart behaviour: page completely untouched.
+  This is the primary degradation fixture — our code must leave it unchanged.
+-->
+<div data-component-type="s-search-result"
+     data-asin="B0NEWPRODUCT"
+     data-index="7">
+  <div class="puis-card-container s-card-container s-overflow-hidden aok-relative">
+
+    <div class="puisg-row">
+      <div class="puisg-col puisg-col-4-of-12">
+        <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
+             alt="New product" class="s-image" />
+      </div>
+
+      <div class="puisg-col puisg-col-8-of-12">
+        <!-- Title -->
+        <h2 class="a-size-medium a-spacing-none a-color-base a-text-normal">
+          <a href="/dp/B0NEWPRODUCT" class="a-link-normal s-line-clamp-4">
+            Brand New Headphones 2026 Launch
+          </a>
+        </h2>
+
+        <!-- New Arrival badge — no stars, no count -->
+        <div class="a-row">
+          <span class="a-badge a-badge-supplementary">
+            <span class="a-badge-text">New Arrival</span>
+          </span>
+        </div>
+
+        <!-- Price -->
+        <div class="a-row">
+          <span class="a-price">
+            <span class="a-offscreen">₹3,999</span>
+            <span class="a-price-whole">3,999</span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
