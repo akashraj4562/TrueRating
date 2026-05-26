@@ -108,8 +108,9 @@ export function clearAllChanges(): void {
     document.querySelectorAll('.cc-badge, .cc-sponsor-tag').forEach((el) => {
       el.remove();
     });
-    // why: also clean up hide class on outer wrapper in case it was applied there
-    document.querySelectorAll('[data-component-type="s-search-result"].cc-hide').forEach((el) => {
+    // why: also clean up hide class on outer wrappers in case it was applied there —
+    // covers the standard grid card, sponsored cards, and horizontal carousel items.
+    document.querySelectorAll('[data-component-type="s-search-result"].cc-hide, [data-component-type="sp-sponsored-result"].cc-hide, .a-carousel-card.cc-hide').forEach((el) => {
       el.classList.remove('cc-hide');
     });
   } catch {

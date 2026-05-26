@@ -17,8 +17,21 @@ export const AMAZON = {
    * Outer container for each product result card on search pages.
    * Using data-component-type — more stable than class names, which Amazon
    * minifies and rotates between deploys.
+   *
+   * Comma-separated to also capture horizontal scroll carousels (the
+   * "Sponsored products" row at the top of search results and "Related
+   * products" / "Customers also viewed" rows) — these use the
+   * "sp-sponsored-result" component type rather than "s-search-result".
    */
-  RESULT_CARD: '[data-component-type="s-search-result"]',
+  RESULT_CARD: '[data-component-type="s-search-result"], [data-component-type="sp-sponsored-result"]',
+
+  /**
+   * Carousel items that lack a data-component-type entirely.
+   * Some Amazon horizontal carousels render product tiles as
+   * `.a-carousel-card` elements with only a `data-asin` attribute.
+   * We pick these up separately and de-dupe against RESULT_CARD matches.
+   */
+  CAROUSEL_ITEM: '.a-carousel-card[data-asin]',
 
   /**
    * Sponsored / ad placement detection.

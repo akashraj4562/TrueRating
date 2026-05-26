@@ -117,7 +117,20 @@ function processPage(settings: Settings): void {
 
   if (!settings.enabled) return;
 
-  const cards = document.querySelectorAll(AMAZON.RESULT_CARD);
+  // Query all card types: standard grid cards (s-search-result),
+  // sponsored cards (sp-sponsored-result), AND horizontal carousel
+  // items (.a-carousel-card[data-asin]) that have no component-type
+  // attribute at all. De-dupe so a carousel item nested inside an
+  // outer result card is only processed once.
+  const cardSet = new Set<Element>();
+  document.querySelectorAll(AMAZON.RESULT_CARD).forEach((el) => cardSet.add(el));
+  document.querySelectorAll(AMAZON.CAROUSEL_ITEM).forEach((el) => {
+    // Only add carousel items not already captured by RESULT_CARD
+    if (!el.closest('[data-component-type="s-search-result"], [data-component-type="sp-sponsored-result"]')) {
+      cardSet.add(el);
+    }
+  });
+  const cards = Array.from(cardSet);
   if (cards.length === 0) return;
 
   // ── Build corpus for Bayesian context ──────────────────────────────────────
