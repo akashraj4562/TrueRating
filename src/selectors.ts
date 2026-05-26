@@ -26,12 +26,18 @@ export const AMAZON = {
   RESULT_CARD: '[data-component-type="s-search-result"], [data-component-type="sp-sponsored-result"]',
 
   /**
-   * Carousel items that lack a data-component-type entirely.
-   * Some Amazon horizontal carousels render product tiles as
-   * `.a-carousel-card` elements with only a `data-asin` attribute.
-   * We pick these up separately and de-dupe against RESULT_CARD matches.
+   * Carousel items inside the s-searchgrid-carousel widget.
+   *
+   * Live-verified 2026-05-27: the carousel renders as:
+   *   <li class="a-carousel-card ...">          ← NO data-asin here
+   *     <div data-sbtc-carousel-item="true">
+   *       <div data-asin="B0CHRKX49F" ...>      ← data-asin is on a CHILD div
+   *
+   * Selector MUST be a descendant selector (space between) — not an attribute
+   * selector on the same element. `.a-carousel-card[data-asin]` finds 0 items;
+   * `.a-carousel-card [data-asin]` finds all 16 carousel cards correctly.
    */
-  CAROUSEL_ITEM: '.a-carousel-card[data-asin]',
+  CAROUSEL_ITEM: '.a-carousel-card [data-asin]',
 
   /**
    * Sponsored / ad placement detection.

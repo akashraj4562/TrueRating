@@ -137,9 +137,9 @@ function processPage(settings: Settings): void {
 
   // Query all card types: standard grid cards (s-search-result),
   // sponsored cards (sp-sponsored-result), AND horizontal carousel
-  // items (.a-carousel-card[data-asin]) that have no component-type
-  // attribute at all. De-dupe so a carousel item nested inside an
-  // outer result card is only processed once.
+  // items ('.a-carousel-card [data-asin]' — note: data-asin is on a
+  // CHILD div, not the li itself) from s-searchgrid-carousel widgets.
+  // De-dupe so a carousel item nested inside a result card is only processed once.
   const cardSet = new Set<Element>();
   document.querySelectorAll(AMAZON.RESULT_CARD).forEach((el) => cardSet.add(el));
   document.querySelectorAll(AMAZON.CAROUSEL_ITEM).forEach((el) => {
